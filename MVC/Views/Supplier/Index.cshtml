@@ -1,0 +1,108 @@
+﻿@model IEnumerable<MVC.ViewModel.SupplierVM>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal">
+    Create
+</button>
+
+<hr />
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Create</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group" hidden>
+                    <label class="control-label col-md-2">Id</label>
+                    <div class="col-md-10">
+                        <input type="text" id="id" name="Id" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-2">Name</label>
+                    <div class="col-md-10">
+                        <input type="text" id="name" name="Name" class="form-control" hidden />
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSave" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(function () {
+            $("btnSave").click(function () {
+                var object = null;
+                object.Name = $("#Name").val();
+                 $.ajax({
+                    type: "POST",
+                    url: '@Url.Action("Create")',
+                    data: JSON.stringify(object)
+            }).then(x => x.result == false && x.id == supplierVM.id { 
+                success: function () {
+                console.log(result)
+                alert ("Supplier has been added")
+                }
+            }).catch(Exception )
+            {
+                return "Error";
+                
+            }
+            })
+
+        })
+
+        //Edit
+        $(function Edit() {
+            $("btnSave").click(function () {
+                var object = null;
+                object.Name = $("#Name").val();
+                $.ajax({
+                    type: "GET",
+                    url: '@Url.Action("Create")',
+                    data: JSON.stringify(object)
+                })
+            })
+        })
+        // Edit menggunakan Ajax
+        // Delete menggunakan Ajax & Sweetalert
+    </script>
+}
+
